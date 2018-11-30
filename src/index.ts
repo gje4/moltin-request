@@ -46,14 +46,24 @@ export class createClient {
         ...requestHeaders
       }
 
-      const headers: Headers = {
-        'Content-Type': 'application/json',
-        'X-MOLTIN-SDK-LANGUAGE': 'JS-REQUEST',
-        Authorization: `Bearer ${await this.authenticate()}`,
-        ...(application && { 'X-MOLTIN-APPLICATION': application }),
-        ...(currency && { 'X-MOLTIN-CURRENCY': currency }),
-        ...(customer_token && { 'X-MOLTIN-CUSTOMER-TOKEN': customer_token }),
-        ...customHeaders
+      if (customHeaders) {
+        const headers: Headers = {
+          Authorization: `Bearer ${await this.authenticate()}`,
+          ...(content_type && { 'Content-Type': content_type }),
+          ...(application && { 'X-MOLTIN-APPLICATION': application }),
+          ...(currency && { 'X-MOLTIN-CURRENCY': currency }),
+          ...(customer_token && { 'X-MOLTIN-CUSTOMER-TOKEN': customer_token }),
+          ...customHeaders
+        }
+      } else {
+        const headers: Headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${await this.authenticate()}`,
+          ...(application && { 'X-MOLTIN-APPLICATION': application }),
+          ...(currency && { 'X-MOLTIN-CURRENCY': currency }),
+          ...(customer_token && { 'X-MOLTIN-CUSTOMER-TOKEN': customer_token }),
+          ...customHeaders
+        }
       }
 
       const body = customHeaders['Content-Type']
