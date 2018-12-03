@@ -46,10 +46,10 @@ export class createClient {
         ...requestHeaders
       }
 
-      let headers: Headers
-
+      const headers: Headers
       headers = {
         'Content-Type': 'application/json',
+        'X-MOLTIN-SDK-LANGUAGE': 'JS-REQUEST',
         Authorization: `Bearer ${await this.authenticate()}`,
         ...(application && { 'X-MOLTIN-APPLICATION': application }),
         ...(currency && { 'X-MOLTIN-CURRENCY': currency }),
